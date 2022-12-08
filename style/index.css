@@ -1,0 +1,35 @@
+canvas{
+    background-color: black;
+    border-radius: 3px;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.group-box{
+    position: relative;
+    padding: 2px;
+    padding-top: 6px;
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+    height: fit-content;
+    width: fit-content;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.group-box > .group-name{
+    position: absolute;
+    height: 14px;
+    left: 3%;
+    top: -26px;
+    padding-left: 3px;
+    padding-right: 3px;
+    background-color: inherit;
+}
+
+h1{
+    text-align: center;
+}
