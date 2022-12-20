@@ -1,6 +1,6 @@
 "use strict";
 
-import { getGL } from "./core.js";
+import * as glSys from "./gl.js";
 
 let mGLVertexBuffer = null;
 function get(){return mGLVertexBuffer;}
@@ -13,7 +13,7 @@ let mVerteciesOfSquare = [
 ]
 
 function init(){
-    let gl = getGL();
+    let gl = glSys.get();
     mGLVertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, mGLVertexBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mVerteciesOfSquare), gl.STATIC_DRAW);

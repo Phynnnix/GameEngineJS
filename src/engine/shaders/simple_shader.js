@@ -1,13 +1,14 @@
-import { getGL } from "../core.js";
-import { get as getVertexBuffer } from "../vertex_buffer.js";
+import * as glSys from "../core/gl.js";
+import { get as getVertexBuffer } from "../core/vertex_buffer.js";
 
 class SimpleShader{
     constructor(vertexShaderId, fragmentShaderId){
         this.mCompiledShader = null;
         this.mVertexPositionRef = null;
         this.mPixelColorRef = null;
+        this.mModelMatrixRef = null;
 
-        let gl = getGL();
+        let gl = glSys.get();
 
         this.mVertexShader = loadAndCompileShader(vertexShaderId, gl.VERTEX_SHADER);
         this.mFragmentShader = loadAndCompileShader(fragmentShaderId, gl.FRAGMENT_SHADER);
@@ -23,10 +24,11 @@ class SimpleShader{
 
         this.mVertexPositionRef = gl.getAttribLocation(this.mCompiledShader, "aVertexPosition");
         this.mPixelColorRef = gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
+        this.mModelMatrixRef = gl.getUniformLocation(this.mCompiledShader, "uModelXformMatrix");
     }
 
-    activate(pixelColor){
-        let gl = getGL();
+    activate(pixelColor, trsMatrix){
+        let gl = glSys.get();
         gl.useProgram(this.mCompiledShader);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, getVertexBuffer());
@@ -40,6 +42,7 @@ class SimpleShader{
         gl.enableVertexAttribArray(this.mVertexPositionRef);
 
         gl.uniform4fv(this.mPixelColorRef, pixelColor);
+        gl.uniformMatrix4fv(this.mModelMatrixRef, false, trsMatrix);
     }
 }
 
@@ -64,7 +67,7 @@ function loadAndCompileShader(filePath, shaderType){
                 + " failed!");
     }
 
-    let gl = getGL();
+    let gl = glSys.get();
     compiledShader = gl.createShader(shaderType);
     gl.shaderSource(compiledShader, shaderSource);
     gl.compileShader(compiledShader);
