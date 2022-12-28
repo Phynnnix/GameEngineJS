@@ -4,6 +4,12 @@ import * as glSys from "../engine/core/gl.js";
 class Game{
     constructor(canvasId){
         engine.init(canvasId);
+
+        this.mCamera = new engine.Camera(
+            glMatrix.vec2.fromValues(20, 60),
+            20,
+            [20, 40, 600, 300]
+        );
         
         this.mBlueSq = new engine.Renderable();
         this.mBlueSq.setColor([0.25, 0.25, 0.95, 1]);
@@ -20,42 +26,28 @@ class Game{
 
         engine.clearCanvas([.9, .9, .9, 1]);
 
-        let gl = glSys.get();
-        gl.viewport(20,40,600,300);
-        gl.scissor(20,40,600,300);
-        gl.enable(gl.SCISSOR_TEST);
-        engine.clearCanvas([.7,.7,.7,1]);
-        gl.disable(gl.SCISSOR_TEST);
-
-        let cameraCenter = glMatrix.vec2.fromValues(20, 60);
-        let wcSize = glMatrix.vec2.fromValues(20, 10);
-        let cameraMatrix = glMatrix.mat4.create();
-        glMatrix.mat4.scale(cameraMatrix, glMatrix.mat4.create(), 
-            	glMatrix.vec3.fromValues(2.0/wcSize[0], 2.0/wcSize[1], 1.0));
-        glMatrix.mat4.translate(cameraMatrix, cameraMatrix,
-                glMatrix.vec3.fromValues(-cameraCenter[0], -cameraCenter[1], .0));
-        
+        this.mCamera.setViewAndCameraMatrix();
 
         this.mBlueSq.getXform().setPosition(20, 60);
         this.mBlueSq.getXform().setRotationInRad(0.2); // In Radians
         this.mBlueSq.getXform().setSize(5, 5);
-        this.mBlueSq.draw(cameraMatrix);
+        this.mBlueSq.draw(this.mCamera);
 
         this.mRedSq.getXform().setPosition(20, 60);
         this.mRedSq.getXform().setSize(2, 2);
-        this.mRedSq.draw(cameraMatrix);
+        this.mRedSq.draw(this.mCamera);
         
         this.mTLSq.getXform().setPosition(10, 65);
-        this.mTLSq.draw(cameraMatrix);
+        this.mTLSq.draw(this.mCamera);
 
         this.mTRSq.getXform().setPosition(30, 65);
-        this.mTRSq.draw(cameraMatrix);
+        this.mTRSq.draw(this.mCamera);
 
         this.mBRSq.getXform().setPosition(30, 55);
-        this.mBRSq.draw(cameraMatrix);
+        this.mBRSq.draw(this.mCamera);
 
         this.mBLSq.getXform().setPosition(10, 55);
-        this.mBLSq.draw(cameraMatrix);
+        this.mBLSq.draw(this.mCamera);
 
     }
 }

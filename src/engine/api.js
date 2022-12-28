@@ -16,9 +16,10 @@ function clearCanvas(color){
 
 import Renderable from "./renderable.js";
 import Transform from "./transform.js";
+import Camera from "./camera.js";
 
 export {
-    Renderable, Transform,
+    Renderable, Transform, Camera,
 
     
     init, clearCanvas
