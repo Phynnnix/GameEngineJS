@@ -19,6 +19,14 @@ class Transform{
         this.setWidth(width);
         this.setHeight(height);
     }
+    incSizeBy(delta){
+        this.incWidthBy(delta);
+        this.incHeightBy(delta);
+    }
+    decSizeBy(delta){
+        this.decWidthBy(delta);
+        this.decHeightBy(delta);
+    }
     getSize(){
         return this.mScale;
     }
@@ -26,11 +34,23 @@ class Transform{
     setXPos(xPos){
         glMatrix.vec2.set(this.mPosition, xPos, this.mPosition[1]);
     }
+    incXPosBy(delta){
+        glMatrix.vec2.set(this.mPosition, this.mPosition[0] + delta, this.mPosition[1]);
+    }
+    decXPosBy(delta){
+        glMatrix.vec2.set(this.mPosition, this.mPosition[0] - delta, this.mPosition[1]);
+    }
     getXPos(){
         return this.mPosition[0];
     }
     setYPos(yPos){
         glMatrix.vec2.set(this.mPosition, this.mPosition[0], yPos);
+    }
+    incYPosBy(delta){
+        glMatrix.vec2.set(this.mPosition, this.mPosition[0], this.mPosition[1] + delta);
+    }
+    decYPosBy(delta){
+        glMatrix.vec2.set(this.mPosition, this.mPosition[0], this.mPosition[1] - delta);
     }
     getYPos(){
         return this.mPosition[1];
@@ -39,11 +59,23 @@ class Transform{
     setWidth(width){
         glMatrix.vec2.set(this.mScale, width, this.mScale[1]);
     }
+    incWidthBy(delta){
+        glMatrix.vec2.set(this.mScale, this.mScale[0] + delta, this.mScale[1]);
+    }
+    decWidthBy(delta){
+        glMatrix.vec2.set(this.mScale, this.mScale[0] - delta, this.mScale[1]);
+    }
     getWidth(){
         return this.mScale[0];
     }
     setHeight(height){
         glMatrix.vec2.set(this.mScale, this.mScale[0], height);
+    }
+    incHeightBy(delta){
+        glMatrix.vec2.set(this.mScale, this.mScale[0], this.mScale[1] + delta);
+    }
+    decHeightBy(delta){
+        glMatrix.vec2.set(this.mScale, this.mScale[0], this.mScale[1] - delta);
     }
     getHeight(){
         return this.mScale[1];
@@ -52,11 +84,23 @@ class Transform{
     setRotationInRad(rotationInRadians){
         this.mRotationInRad = rotationInRadians;
         while(this.mRotationInRad > (2 * Math.PI)){
-            this.mRotationInRad -= (2 * Math.Pi);
+            this.mRotationInRad -= (2 * Math.PI);
         }
     }
     setRotationInDegree(rotationInDegree){
         this.setRotationInRad(rotationInDegree * Math.PI / 180.0);
+    }
+    incRotationInRadBy(delta){
+        this.setRotationInRad(this.mRotationInRad + delta)
+    }
+    decRotationInRadBy(delta){
+        this.setRotationInRad(this.mRotationInRad - delta)
+    }
+    incRotationInDegreeBy(delta){
+        this.incRotationInRadBy(delta * Math.PI / 180.0)
+    }
+    decRotationInDegreeBy(delta){
+        this.decRotationInRadBy(delta * Math.PI / 180.0)
     }
     getRotation(){
         return this.mRotationInRad;
